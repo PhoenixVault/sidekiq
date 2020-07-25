@@ -100,7 +100,7 @@ module Sidekiq
         # safely dumpable in current Rubies
         keys = options.keys
         keys.delete(:ssl_params)
-        scrubbed_options = Marshal.load(Marshal.dump(options.slice(*keys)))
+        scrubbed_options = options.slice(*keys)
         if scrubbed_options[:url] && (uri = URI.parse(scrubbed_options[:url])) && uri.password
           uri.password = redacted
           scrubbed_options[:url] = uri.to_s
